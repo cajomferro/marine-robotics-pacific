@@ -1,5 +1,14 @@
 # marine-robotics-pacific
 
+### Testing the linear actuator
+
+```
+from pacific.servos import linact
+l = linact.LinAct()
+l.open()
+l.close()
+```
+
 Qwiic available sensors:
 
 ```
