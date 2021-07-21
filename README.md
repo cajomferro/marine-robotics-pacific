@@ -3,10 +3,12 @@
 ### Testing the linear actuator
 
 ```
-from pacific.servos import linact
-l = linact.LinAct()
-l.open()
-l.close()
+make upload
+```
+
+```
+python test_lin_act.py --open
+python test_lin_act.py --close
 ```
 
 Qwiic available sensors:
