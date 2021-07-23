@@ -1,5 +1,5 @@
 import argparse
-from pacific.servos import linact
+from pacific import linact
 
 
 def parse_command():
@@ -16,9 +16,9 @@ def parse_command():
 def main():
     args = parse_command()
 
-    print(args.port)
-    print(args.open)
-    print(args.close)
+    # print(args.port)
+    # print(args.open)
+    # print(args.close)
 
     servo = linact.LinAct(args.port)
 
