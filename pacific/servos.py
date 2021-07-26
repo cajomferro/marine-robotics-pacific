@@ -33,5 +33,10 @@ class Syringe(Servos):
 
 
 class Pitch(Servos):
-    def __init__(self, port: int = 2, min: int = 50, max: int = 95):
+    def __init__(self, port: int = 2, min: int = 55, max: int = 95):
+        super().__init__(port, min, max)
+
+
+class Roll(Servos):
+    def __init__(self, port: int = 1, min: int = 0, max: int = 360):
         super().__init__(port, min, max)

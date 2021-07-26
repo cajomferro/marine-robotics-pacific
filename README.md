@@ -1,14 +1,26 @@
 # marine-robotics-pacific
 
-### Testing the linear actuator
-
+## Upload and connect
 ```
 make upload
+make ssh
 ```
 
+## Available scripts
+
 ```
-python test_lin_act.py --open
-python test_lin_act.py --close
+python test_pitch.py --open
+python test_pitch.py --close
+python test_pitch.py --set 70
+
+python test_syringe.py --open
+python test_syringe.py --close
+python test_syringe.py --set 70
+
+python test_icm20948.py
+
+python test_ms5837.py
+
 ```
 
 Qwiic available sensors:
