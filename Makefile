@@ -1,4 +1,4 @@
-HOST=pac.local
+HOST=pac.wifi
 
 all: upload
 
