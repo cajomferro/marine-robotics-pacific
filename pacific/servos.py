@@ -38,5 +38,29 @@ class Pitch(Servos):
 
 
 class Roll(Servos):
-    def __init__(self, port: int = 1, min: int = 0, max: int = 360):
+    def __init__(self, port: int = 1, min: int = -90, max: int = 90):
         super().__init__(port, min, max)
+        self.factor: float = 1.88  # 340=abs(60)+280 | 340 / 180 ~1.88
+        self.offset: int = -60  # real min
+
+    def close(self):
+        pass
+
+    def open(self):
+        pass
+
+    def set(self, val: int = 0):
+        print(val)
+        if val < self.min or val > self.max:
+            print(f"Warning! Value {val} is outside range (min={self.min}, max={self.max})")
+            return
+        else:
+            if val >= 0:
+                val += 90
+            else:
+                val = 90 + val
+
+            print(val)
+            degrees = self.offset + (val * self.factor)
+            print(degrees)
+            self.servo.move_servo_position(self.port, degrees, 180)

@@ -7,9 +7,11 @@ def parse_command():
     parser.add_argument(
         "-p", "--port", type=int, help="servo port.", default=1)
     parser.add_argument(
-        "-o", "--open", help="open", action="store_true")
+        "-m", "--min", help="min value", action="store_true")
     parser.add_argument(
-        "-c", "--close", help="open", action="store_true")
+        "-M", "--max", help="max value", action="store_true")
+    parser.add_argument(
+        "-c", "--center", help="center", action="store_true")
     parser.add_argument(
         "-s", "--set", type=int, help="specific value")
     return parser.parse_args()
@@ -24,13 +26,16 @@ def main():
 
     servo = servos.Roll(port=args.port)
 
-    if args.open is True:
-        servo.open()
+    if args.min is True:
+        servo.set(-90)
 
-    if args.close is True:
-        servo.close()
+    elif args.max is True:
+        servo.set(90)
 
-    if args.set is not None:
+    elif args.center is True:
+        servo.set()
+
+    elif args.set is not None:
         servo.set(args.set)
 
 
