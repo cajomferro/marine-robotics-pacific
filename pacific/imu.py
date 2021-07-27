@@ -1,23 +1,25 @@
-from icm20948 import ICM20948
-# import time
-import sys
+from icm20948 import ICM20948  # https://github.com/pimoroni/icm20948-python
 from dataclasses import dataclass
 import math
 
 
 @dataclass
-class PitchRoll:
+class IMUSensorFusion:
     gyro_sens: float = 65.5
     gx_offset: float = -0.5
     gy_offset: float = -0.8
     accel_sens: float = 8.192
-    pitch = 0
-    roll = 0
-    alpha = 0.7
-    dt = 0.32
+    pitch: float = 0
+    roll: float = 0
+    alpha: float = 0.7
+    dt: float = 0.32
     imu = ICM20948(0x69)
 
     def read(self):
+        """
+        Read and calibrate
+        Based on: https://andrewmourcos.github.io/blog/2020/11/21/complementary-filter.html
+        """
         aX, aY, aZ, gX, gY, gZ = self.imu.read_accelerometer_gyro_data()
 
         accel = (aX / self.accel_sens, aY / self.accel_sens, aZ / self.accel_sens)
@@ -40,19 +42,3 @@ class PitchRoll:
         r = (self.roll * 180 / math.pi)
 
         return round(p), round(r)
-
-
-def run():
-    pitch_roll = PitchRoll()
-    while True:
-        p, r = pitch_roll.read()
-        print("pitch: ", p)
-        print("roll: ", r)
-
-
-if __name__ == '__main__':
-    try:
-        run()
-    except (KeyboardInterrupt, SystemExit) as exErr:
-        print("\nEnding Example 1")
-        sys.exit(0)
