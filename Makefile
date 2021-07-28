@@ -1,6 +1,6 @@
-HOST=pac.local
+HOST=raspberrypi.local
 #RSYNC_OPTS=-r --size-only --no-times
-RSYNC_OPTS=-av --modify-window 2 --dry-run
+RSYNC_OPTS=-a
 
 all: upload
 
@@ -10,6 +10,7 @@ upload:
 	rsync $(RSYNC_OPTS) test_imu.py pi@$(HOST):/home/pi/test_imu.py
 	rsync $(RSYNC_OPTS) test_pitch.py pi@$(HOST):/home/pi/test_pitch.py
 	rsync $(RSYNC_OPTS) test_roll.py pi@$(HOST):/home/pi/test_roll.py
+	rsync $(RSYNC_OPTS) test_godown.py pi@$(HOST):/home/pi/test_godown.py
 	rsync $(RSYNC_OPTS) libs/ms5837-python/ms5837/ms5837.py pi@$(HOST):/home/pi/pacific/
 	rsync $(RSYNC_OPTS) libs/ms5837-python/example.py pi@$(HOST):/home/pi/test_ms5837.py
 

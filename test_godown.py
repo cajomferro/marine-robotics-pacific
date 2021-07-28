@@ -11,21 +11,24 @@ from pacific.servos import Syringe
 
 @dataclass
 class Runner:
-    path: Path = Path()
+    init_wait_time_sec: int = 20
+    path: Path = Path("out.txt")
 
     def print(self, msg: str):
         now = datetime.now()  # current date and time
-        with self.path.open() as fd:
-            fd.write(f"{now.strftime('%H:%M:%S')}: {msg}")
-            fd.write("\n")
+        output = f"{now.strftime('%H:%M:%S')}: {msg}\n"
+        with self.path.open("a+") as fd:
+            fd.write(output)
+        print(output)
 
     def __post_init__(self):
         self.print("Boot")
         self.pitch_roll = IMUSensorFusion()
         self.pressure = Pressure()
         self.syringe = Syringe()
-        self.print("Waiting 10 seconds")
-        time.sleep(10)
+        self.syringe.open()  # open linear act, close syringe
+        self.print(f"Waiting {self.init_wait_time_sec} seconds")
+        time.sleep(self.init_wait_time_sec)
 
     def run(self):
         self.print("Going down")
