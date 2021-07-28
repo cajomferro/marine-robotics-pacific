@@ -1,6 +1,6 @@
-HOST=pac.wifi
+HOST=pac.local
 #RSYNC_OPTS=-r --size-only --no-times
-RSYNC_OPTS=-a
+RSYNC_OPTS=-av --modify-window 2 --dry-run
 
 all: upload
 
