@@ -12,11 +12,11 @@ from pacific.servos import Syringe
 @dataclass
 class Runner:
     init_wait_time_sec: int = 20
-    path: Path = Path("out.txt")
+    path: Path = Path("out.csv")
 
     def print(self, msg: str):
         now = datetime.now()  # current date and time
-        output = f"{now.strftime('%H:%M:%S')}: {msg}\n"
+        output = f"{now.strftime('%H:%M:%S')}, {msg}\n"
         with self.path.open("a+") as fd:
             fd.write(output)
         print(output)
@@ -34,14 +34,20 @@ class Runner:
         self.print("Going down")
         self.syringe.close()  # close linear act, open syringe
 
-        while True:
+        counter = 0
+
+        while counter <= 100:
             p, r = self.pitch_roll.read()
             press, temp = self.pressure.read()
 
-            self.print(f"Pitch: {p} | Roll: {r}")
-            self.print(f"Press: {press} | Temp: {temp}")
-
+            # self.print(f"Pitch: {p} | Roll: {r} | Press: {press} | Temp: {temp}")
+            self.print(f"{p}, {r}, {press}, {temp}")
             time.sleep(0.5)
+
+            counter += 1
+
+        self.syringe.open()  # open linear act, open syringe
+        time.sleep(10)
 
 
 if __name__ == '__main__':
